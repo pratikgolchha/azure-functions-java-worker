@@ -55,8 +55,6 @@ extends:
           sdl:
             codeql:
               language: csharp
-        variables:
-
         jobs:
           - template: /eng/ci/templates/official/jobs/run-e2e-tests-windows.yml@self
 

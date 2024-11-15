@@ -32,35 +32,37 @@ extends:
       image: 1es-windows-2022
       os: windows
 
-    sdl:
-      codeql:
-        compiled:
-          enabled: true
-        runSourceLanguagesInSourceAnalysis: true
-
     settings:
       # PR's from forks do not have sufficient permissions to set tags.
       skipBuildTagsForGitHubPullRequests: ${{ variables['System.PullRequest.IsFork'] }}
 
     stages:
       - stage: Build
-        variables:
-          Codeql.Language: java,powershell
-          Codeql.RunSourceLanguagesInSourceAnalysis: true
+        templateContext:
+          sdl:
+            codeql:
+              language: java,powershell
+              runSourceLanguagesInSourceAnalysis: true
         jobs:
           - template: /eng/ci/templates/jobs/build.yml@self
 
       - stage: TestWindows
         dependsOn: Build
-        variables:
-          Codeql.Language: csharp
+        templateContext:
+          sdl:
+            codeql:
+              language: csharp
         jobs:
           - template: /eng/ci/templates/jobs/run-emulated-tests-windows.yml@self
 
       - stage: TestLinux
         dependsOn:
           - TestWindows
-        variables:
-          Codeql.Enabled: false
+        templateContext:
+          sdl:
+            codeql:
+              compiled:
+                enabled: false
+                justificationForDisabling: 'Running the scan in TestWindows stage'
         jobs:
           - template: /eng/ci/templates/jobs/run-emulated-tests-linux.yml@self

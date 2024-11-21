@@ -42,6 +42,7 @@ extends:
           sdl:
             codeql:
               language: java,powershell
+              buildIdentifier: java_worker_public
               runSourceLanguagesInSourceAnalysis: true
         jobs:
           - template: /eng/ci/templates/jobs/build.yml@self
@@ -52,6 +53,8 @@ extends:
           sdl:
             codeql:
               language: csharp
+              buildIdentifier: java_worker_csharp_public
+              excludePathPatterns: '/extract/inst'
         jobs:
           - template: /eng/ci/templates/jobs/run-emulated-tests-windows.yml@self
 

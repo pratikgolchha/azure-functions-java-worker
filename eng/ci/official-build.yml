@@ -46,6 +46,7 @@ extends:
             codeql:
               language: java,powershell
               runSourceLanguagesInSourceAnalysis: true
+              buildIdentifier: java_worker_official
         jobs:
           - template: /eng/ci/templates/official/jobs/build-artifacts.yml@self
 
@@ -55,6 +56,8 @@ extends:
           sdl:
             codeql:
               language: csharp
+              buildIdentifier: java_worker_csharp_official
+              excludePathPatterns: '/extract/inst'
         jobs:
           - template: /eng/ci/templates/official/jobs/run-e2e-tests-windows.yml@self
 

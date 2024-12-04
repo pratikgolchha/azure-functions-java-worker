@@ -47,6 +47,7 @@ extends:
               language: java,powershell
               runSourceLanguagesInSourceAnalysis: true
               buildIdentifier: java_worker_official
+              excludePathPatterns: '/extract/inst'
         jobs:
           - template: /eng/ci/templates/official/jobs/build-artifacts.yml@self
 

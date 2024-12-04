@@ -43,6 +43,7 @@ extends:
             codeql:
               language: java,powershell
               buildIdentifier: java_worker_public
+              excludePathPatterns: '/extract/inst'
               runSourceLanguagesInSourceAnalysis: true
         jobs:
           - template: /eng/ci/templates/jobs/build.yml@self

@@ -31,7 +31,7 @@ variables:
   - template: ci/variables/build.yml@eng
   - template: ci/variables/cfs.yml@eng
   - name: codeql.language
-    value: java,powershell
+    value: java,powershell,csharp
   - name: codeql.buildIdentifier
     value: java_worker_official
   - name: codeql.excludePathPatterns
@@ -53,10 +53,13 @@ extends:
       - stage: TestWindows
         dependsOn: Build
         jobs:
-          - template: /eng/ci/templates/official/jobs/run-e2e-tests-windows.yml@self
+          - template: /eng/ci/templates/jobs/run-emulated-tests-windows.yml@self
+            parameters:
+              poolName: 1es-pool-azfunc
 
       - stage: TestLinux
-        dependsOn:
-          - TestWindows
+        dependsOn: Build
         jobs:
-          - template: /eng/ci/templates/official/jobs/run-e2e-tests-linux.yml@self
+          - template: /eng/ci/templates/jobs/run-emulated-tests-linux.yml@self
+            parameters:
+              poolName: 1es-pool-azfunc

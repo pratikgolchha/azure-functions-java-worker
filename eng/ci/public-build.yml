@@ -31,6 +31,8 @@ variables:
     value: java_worker_public
   - name: codeql.excludePathPatterns
     value: extract/inst
+  - name: codeql.compiled.enabled
+    value: true
 
 extends:
   template: v1/1ES.Unofficial.PipelineTemplate.yml@1es

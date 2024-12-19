@@ -24,16 +24,6 @@ resources:
       name: 1ESPipelineTemplates/1ESPipelineTemplates
       ref: refs/tags/release
 
-variables:
-  - name: codeql.language
-    value: java,powershell,csharp
-  - name: codeql.buildIdentifier
-    value: java_worker_public
-  - name: codeql.excludePathPatterns
-    value: extract/inst
-  - name: codeql.compiled.enabled
-    value: true
-
 extends:
   template: v1/1ES.Unofficial.PipelineTemplate.yml@1es
   parameters:
@@ -41,6 +31,14 @@ extends:
       name: 1es-pool-azfunc-public
       image: 1es-windows-2022
       os: windows
+
+    sdl:
+      codeql:
+        compiled:
+          enabled: true # still only runs for default branch
+        language: java,powershell,csharp
+        buildIdentifier: java_worker_public
+        excludePathPatterns: extract/inst
 
     settings:
       # PR's from forks do not have sufficient permissions to set tags.
